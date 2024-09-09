@@ -1,22 +1,30 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <stdlib.h>
+#include <string.h>
 #include "compare_char.h"
 #include "onegin.h"
 #include "sort.h"
 
-int replace_values(int y, char * text);
-int sort_columns(int y, char * text);
+int replace_values(int y, char text[25][100]);
+int sort_columns(int y, char text[25][100]);
+int check_characters(char a);
 
-int sort(char * text)
+int sort(char text[25][100])
 {
-    for(int y = 1; y < MAXIMUM_NUMBER_OF_COLUMNS; y++)
+    for(int i = 1; i < MAXIMUM_NUMBER_OF_COLUMNS; i++)
     {
-        sort_columns(y, text);
+        printf("%d ", i);
+        for(int y = 1; y < MAXIMUM_NUMBER_OF_COLUMNS; y++)
+        {
+            printf("%d ", y);
+            sort_columns(y, text);
+        }
     }
     return 0;
 }
 
-int replace_values(int y, char * text)
+int replace_values(int y, char text[25][100])
 {
     for(int x = 0; x < MAXIMUM_LINE_LENGTH; x++)
     {
@@ -26,21 +34,33 @@ int replace_values(int y, char * text)
     }
     return 0;
 }
-int sort_columns(int y, char * text)
+int sort_columns(int y, char  text[25][100])
 {
+    int skip_symbols_first_string  = 0;
+    int skip_symbols_second_string = 0;
+
     for(int x = 0; x < MAXIMUM_LINE_LENGTH; x++)
     {
-        if (text[y-1][x] != '\n' && text[y][x] != '\n')
+        while(check_characters(text[y-1][x+skip_symbols_first_string]))
         {
-            char first  = toupper(text[y-1][x]);
-            char second = toupper(text[y  ][x]);
+            skip_symbols_first_string++;
+        }
+        while(check_characters(text[y][x+skip_symbols_second_string]))
+        {
+            skip_symbols_second_string++;
+        }
+        if (text[y-1][x+skip_symbols_first_string] != '\n' &&
+            text[y][x+skip_symbols_second_string] != '\n')
+        {
+            char first  = toupper(text[y-1][x+skip_symbols_first_string]);
+            char second = toupper(text[y  ][x+skip_symbols_second_string]);
 
             int solution_option = compare_char(first, second);
             switch(solution_option)
             {
                 case 1 :
                 {
-                    replace_values(y, text);
+                    replace_values(y, &text[0]);
                     break;
                 }
                 case -1 :
@@ -64,4 +84,13 @@ int sort_columns(int y, char * text)
         }
     }
     return 0;
+}
+
+int check_characters(char a)
+{
+    if (a > 65 && a < 123)
+    {
+        return 0;
+    }
+    return 1;
 }

@@ -1,6 +1,8 @@
 #ifndef SORT_H
 #define SORT_H
 
-int sort(char * text);
+#include "onegin.h"
+
+int sort(char text[25][100]);
 
 #endif /*SORT_H*/

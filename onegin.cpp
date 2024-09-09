@@ -16,6 +16,7 @@ int main()
     int  x      = 0;
     int  y      = 0;
 
+    printf("1\n");
     while((symbol = getc(point_to_file)) != EOF)
     {
         text[y][x] = symbol;
@@ -28,16 +29,18 @@ int main()
         }
     }
     fclose(point_to_file);
+    printf("2\n");
 
-    sort(*text);
+    sort(&text[0]);
 
     for(y = 0; y < 25; y++)
     {
-        for(x = 0; x < 50; x++)
+        for(x = 0; x < 100; x++)
         {
             putchar(text[y][x]);
         }
     }
+    printf("3\n");
 
     return 0;
 }
