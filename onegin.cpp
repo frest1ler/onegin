@@ -33,9 +33,9 @@ int main()
 
     sort(&text[0]);
 
-    for(y = 0; y < 25; y++)
+    for(y = 0; y < MAXIMUM_NUMBER_OF_COLUMNS; y++)
     {
-        for(x = 0; x < 100; x++)
+        for(x = 0; x <MAXIMUM_LINE_LENGTH; x++)
         {
             putchar(text[y][x]);
         }

@@ -6,11 +6,11 @@
 #include "onegin.h"
 #include "sort.h"
 
-int replace_values(int y, char text[25][100]);
-int sort_columns(int y, char text[25][100]);
+int replace_values(int y, char text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH]);
+int sort_columns(int y, char text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH]);
 int check_characters(char a);
 
-int sort(char text[25][100])
+int sort(char text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH])
 {
     for(int i = 1; i < MAXIMUM_NUMBER_OF_COLUMNS; i++)
     {
@@ -24,7 +24,7 @@ int sort(char text[25][100])
     return 0;
 }
 
-int replace_values(int y, char text[25][100])
+int replace_values(int y, char text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH])
 {
     for(int x = 0; x < MAXIMUM_LINE_LENGTH; x++)
     {
@@ -34,7 +34,7 @@ int replace_values(int y, char text[25][100])
     }
     return 0;
 }
-int sort_columns(int y, char  text[25][100])
+int sort_columns(int y, char  text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH])
 {
     int skip_symbols_first_string  = 0;
     int skip_symbols_second_string = 0;
