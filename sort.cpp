@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include "compare_char.h"
 #include "onegin.h"
 #include "sort.h"
@@ -12,12 +13,14 @@ int check_characters(char a);
 
 int sort(char text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH])
 {
+    assert(text);
+
     for(int i = 1; i < MAXIMUM_NUMBER_OF_COLUMNS; i++)
     {
-        printf("%d ", i);
+        //printf("%d\n ", i);
         for(int y = 1; y < MAXIMUM_NUMBER_OF_COLUMNS; y++)
         {
-            printf("%d ", y);
+            //printf("%d ", y);
             sort_columns(y, text);
         }
     }
@@ -26,6 +29,8 @@ int sort(char text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH])
 
 int replace_values(int y, char text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH])
 {
+    assert(text);
+
     for(int x = 0; x < MAXIMUM_LINE_LENGTH; x++)
     {
         char storage_symbol = text[y-1][x];
@@ -36,6 +41,8 @@ int replace_values(int y, char text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENG
 }
 int sort_columns(int y, char  text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH])
 {
+    assert(text);
+
     int skip_symbols_first_string  = 0;
     int skip_symbols_second_string = 0;
 
@@ -61,7 +68,7 @@ int sort_columns(int y, char  text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGT
                 case 1 :
                 {
                     replace_values(y, &text[0]);
-                    break;
+                    return 0;
                 }
                 case -1 :
                 {
@@ -88,9 +95,5 @@ int sort_columns(int y, char  text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGT
 
 int check_characters(char a)
 {
-    if (a > 65 && a < 123)
-    {
-        return 0;
-    }
-    return 1;
+    return (isspace(a) || ispunct(a));
 }
