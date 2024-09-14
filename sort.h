@@ -3,6 +3,6 @@
 
 #include "onegin.h"
 
-int sort(char text[MAXIMUM_NUMBER_OF_COLUMNS][MAXIMUM_LINE_LENGTH]);
+int sort(char text, char* pointer_to_new_line);
 
 #endif /*SORT_H*/
