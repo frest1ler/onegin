@@ -16,7 +16,7 @@ int sort(char** pointer_to_new_line)
 {
     assert(pointer_to_new_line);
 
-     for(int i = 1; i < 2 /*MAXIMUM_NUMBER_OF_COLUMNS*/; i++)
+     for(int i = 1; i < MAXIMUM_NUMBER_OF_COLUMNS; i++)
     {
         //printf("%d\n ", i);
         for(int y = 1; y < MAXIMUM_NUMBER_OF_COLUMNS; y++)

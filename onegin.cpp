@@ -35,6 +35,7 @@ int main()
             y++  ;
         }
     }
+    text[x + 1] = '\0';
 
     fclose(point_to_file);
     printf("2\n");
@@ -49,7 +50,8 @@ int main()
     {
         int line_element = 0;
         //printf("2.75\n");
-        while((pointer_to_new_line[y])[line_element] != '\n')
+        while((pointer_to_new_line[y])[line_element] != '\n' &&
+              (pointer_to_new_line[y])[line_element] != '\0')
         {
             putchar((pointer_to_new_line[y])[line_element]);
             //printf("%d ", line_element);
