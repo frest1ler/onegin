@@ -59,8 +59,6 @@ int sort_strings(int y, char** pointer_to_new_line)
         {
             skip_symbols_second_string++;
         }
-        //printf("first = %c\n", (pointer_to_new_line[y-1])[line_element + skip_symbols_first_string]);
-        //printf("second = %c\n", (pointer_to_new_line[y])[line_element + skip_symbols_second_string]);
 
         char first  = toupper((pointer_to_new_line[y-1])[line_element + skip_symbols_first_string]);
         char second = toupper((pointer_to_new_line[y])[line_element + skip_symbols_second_string]);
