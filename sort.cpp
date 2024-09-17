@@ -16,7 +16,7 @@ int sort(char** pointer_to_new_line)
 {
     assert(pointer_to_new_line);
 
-    for(int i = 1; i < MAXIMUM_NUMBER_OF_COLUMNS; i++)
+     for(int i = 1; i < 2 /*MAXIMUM_NUMBER_OF_COLUMNS*/; i++)
     {
         //printf("%d\n ", i);
         for(int y = 1; y < MAXIMUM_NUMBER_OF_COLUMNS; y++)
@@ -32,12 +32,12 @@ int replace_values(int y, char** pointer_to_new_line)
 {
     assert(&pointer_to_new_line);
 
-    printf(" replace %d with %d\n", y, y-1);
+    //printf(" replace %d with %d\n", y, y-1);
 
     char* copy_the_address = pointer_to_new_line[y-1];
 
-    pointer_to_new_line[y-1] = pointer_to_new_line[y];
-    pointer_to_new_line[y]   = copy_the_address;
+    pointer_to_new_line[y - 1] = pointer_to_new_line[y];
+    pointer_to_new_line[y] = copy_the_address;
 
     return 0;
 }
@@ -45,15 +45,13 @@ int sort_strings(int y, char** pointer_to_new_line)
 {
     assert(pointer_to_new_line);
 
-    char skip_symbols_first_string  = 0;
-    char skip_symbols_second_string = 0;
+    int skip_symbols_first_string  = 0;
+    int skip_symbols_second_string = 0;
 
-    for(char line_element = 0; (pointer_to_new_line[y - 1])[line_element + skip_symbols_first_string] != '\n' &&
+    for(int line_element = 0; (pointer_to_new_line[y-1])[line_element + skip_symbols_first_string] != '\n' &&
             (pointer_to_new_line[y])[line_element + skip_symbols_second_string] != '\n'; line_element++)
     {
-        printf("kek\n");
         while(check_characters((pointer_to_new_line[y-1])[line_element + skip_symbols_first_string]))
-
         {
             skip_symbols_first_string++;
         }
@@ -61,16 +59,13 @@ int sort_strings(int y, char** pointer_to_new_line)
         {
             skip_symbols_second_string++;
         }
+        //printf("first = %c\n", (pointer_to_new_line[y-1])[line_element + skip_symbols_first_string]);
+        //printf("second = %c\n", (pointer_to_new_line[y])[line_element + skip_symbols_second_string]);
 
         char first  = toupper((pointer_to_new_line[y-1])[line_element + skip_symbols_first_string]);
         char second = toupper((pointer_to_new_line[y])[line_element + skip_symbols_second_string]);
 
-        printf("first = %c ", first);
-        printf("second = %c ", second);
-
         int solution_option = compare_char(first, second);
-
-        printf("solution_option = %d\n", solution_option);
 
         switch(solution_option)
         {

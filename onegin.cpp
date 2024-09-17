@@ -13,10 +13,10 @@ int main()
     assert(point_to_file);
 
     char text[THE_VOLUME_OF_THE_TEXT] = {};
-    char** pointer_to_new_line[MAXIMUM_NUMBER_OF_COLUMNS] = {};
+    char* pointer_to_new_line[MAXIMUM_NUMBER_OF_COLUMNS] = {};
 
     printf("0.5\n");
-    pointer_to_new_line[0] = (char**)text;
+    pointer_to_new_line[0] = (char*)text;
 
     char symbol = 0;
     int  x      = 0;
@@ -31,27 +31,33 @@ int main()
         if (symbol == '\n')
 
         {
-            pointer_to_new_line[y] = (char**)(text+x);
+            pointer_to_new_line[y] = (char*)(text+x);
             y++  ;
         }
     }
+
     fclose(point_to_file);
     printf("2\n");
 
-    sort(*pointer_to_new_line);
+    //printf("%s", (pointer_to_new_line[0]));
+
+    sort(pointer_to_new_line);
 
     printf("2.5\n");
 
-    for(y = 0; y < MAXIMUM_NUMBER_OF_COLUMNS; y++)
+    for(y = 0; y < MAXIMUM_NUMBER_OF_COLUMNS-1; y++)
     {
-        char length_actual_line = pointer_to_new_line[y + 1] - pointer_to_new_line[y];
-
-        for(char line_element = 0; line_element < length_actual_line; line_element++)
+        int line_element = 0;
+        //printf("2.75\n");
+        while((pointer_to_new_line[y])[line_element] != '\n')
         {
-            putchar(**(pointer_to_new_line[y] + line_element * sizeof(char)));
+            putchar((pointer_to_new_line[y])[line_element]);
+            //printf("%d ", line_element);
+            line_element++;
         }
+        putchar('\n');
     }
-    printf("3\n");
+    printf("\n3\n");
 
     return 0;
 }
