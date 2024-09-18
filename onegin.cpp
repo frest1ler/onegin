@@ -1,44 +1,36 @@
 #include <stdio.h>
 #include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "onegin.h"
 #include "sort.h"
 #include "interaction_with_files.h"
 
 int main()
 {
+    char* ptr_to_new_line[MAXIMUM_NUMBER_OF_COLUMNS] = {};
+    char* text = 0;
+
+    int size_text = 0;
 
     FILE * point_to_file = fopen("ONEGIN_SHORT.txt", "r");
 
-    assert(point_to_file);
+    struct stat buf = {};
 
-    char text[THE_VOLUME_OF_THE_TEXT] = {};
-    char* pointer_to_new_line[MAXIMUM_NUMBER_OF_COLUMNS] = {};
+    stat("ONEGIN_SHORT.txt", &buf);
 
-    pointer_to_new_line[0] = (char*)text;
+    size_text = buf.st_size + 1;
 
-    char symbol = 0;
-    int  x      = 0;
-    int  y      = 1;
-
-    while((symbol = getc(point_to_file)) != EOF)
-    {
-        text[x] = symbol;
-        x++;
-
-        if (symbol == '\n')
-
-        {
-            pointer_to_new_line[y] = (char*)(text+x);
-            y++  ;
-        }
-    }
-    text[x + 1] = '\0';
+    text = (char*)calloc(size_text, sizeof(char));
 
     fclose(point_to_file);
 
-    sort(pointer_to_new_line);
+    read_from_file(ptr_to_new_line, text);
 
-    output_text(pointer_to_new_line);
+    sort(ptr_to_new_line);
+
+    output_text(ptr_to_new_line);
 
     return 0;
 }
