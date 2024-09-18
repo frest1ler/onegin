@@ -12,8 +12,6 @@ int main()
     char* ptr_to_new_line[MAXIMUM_NUMBER_OF_COLUMNS] = {};
     char* text = 0;
 
-    //assign_array_size(&text);
-
     read_from_file(ptr_to_new_line, text);
 
     sort(ptr_to_new_line);

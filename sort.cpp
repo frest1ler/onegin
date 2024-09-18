@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <ctype.h>
-#include <stdlib.h>
-#include <string.h>
 #include <assert.h>
 #include "compare_char.h"
 #include "onegin.h"
@@ -9,7 +7,6 @@
 
 int replace_values(int y, char** ptr_to_new_line);
 int sort_strings(int y, char**   ptr_to_new_line);
-//int skip_punctuation_character();
 int check_characters(char a);
 
 int sort(char** ptr_to_new_line)
@@ -41,25 +38,21 @@ int sort_strings(int y, char** ptr_to_new_line)
 {
     assert(ptr_to_new_line);
 
-    int skip_symbols_first_line  = 0;
-    int skip_symbols_second_line = 0;
+    int skip_char_first_line  = 0;
+    int skip_char_second_line = 0;
 
-    for(int line_element = 0; (ptr_to_new_line[y-1])[line_element + skip_symbols_first_line] != '\n' &&
-            (ptr_to_new_line[y])[line_element + skip_symbols_second_line] != '\n'; line_element++)
+    for(int line_element = 0; (ptr_to_new_line[y-1])[line_element + skip_char_first_line] != '\n' &&
+        (ptr_to_new_line[y])[line_element + skip_char_second_line] != '\n'; line_element++)
     {
-        while(check_characters((ptr_to_new_line[y-1])[line_element + skip_symbols_first_line]))
+        while(check_characters((ptr_to_new_line[y-1])[line_element + skip_char_first_line]))
         {
-            skip_symbols_first_line++;
+            skip_char_first_line++;
         }
-        while(check_characters((ptr_to_new_line[y])[line_element + skip_symbols_second_line]))
+        while(check_characters((ptr_to_new_line[y])[line_element + skip_char_second_line]))
         {
-            skip_symbols_second_line++;
+            skip_char_second_line++;
         }
-
-        char first  = toupper((ptr_to_new_line[y-1])[line_element + skip_symbols_first_line]);
-        char second = toupper((ptr_to_new_line[y])[line_element + skip_symbols_second_line]);
-
-        int solution_option = compare_char(first, second);
+        int solution_option = compare_caps_char(y, line_element, skip_char_first_line, skip_char_second_line, ptr_to_new_line);
 
         switch(solution_option)
         {
