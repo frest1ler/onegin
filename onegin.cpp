@@ -12,19 +12,7 @@ int main()
     char* ptr_to_new_line[MAXIMUM_NUMBER_OF_COLUMNS] = {};
     char* text = 0;
 
-    int size_text = 0;
-
-    FILE * point_to_file = fopen("ONEGIN_SHORT.txt", "r");
-
-    struct stat buf = {};
-
-    stat("ONEGIN_SHORT.txt", &buf);
-
-    size_text = buf.st_size + 1;
-
-    text = (char*)calloc(size_text, sizeof(char));
-
-    fclose(point_to_file);
+    //assign_array_size(&text);
 
     read_from_file(ptr_to_new_line, text);
 

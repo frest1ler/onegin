@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 #include "interaction_with_files.h"
 #include "onegin.h"
 
@@ -36,15 +39,16 @@ int output_string(int y, char** ptr_to_new_line)
 int read_from_file(char** ptr_to_new_line, char* text)
 {
     assert(ptr_to_new_line);
-    assert(text);
+
+    FILE * point_to_file = fopen("ONEGIN_SHORT.txt", "r");
+
+    assign_array_size(&text);
 
     ptr_to_new_line[0] = (char*)text;
 
     char symbol = 0;
     int  x      = 0;
     int  y      = 1;
-
-    FILE * point_to_file = fopen("ONEGIN_SHORT.txt", "r");
 
     while((symbol = getc(point_to_file)) != EOF)
     {
@@ -62,5 +66,23 @@ int read_from_file(char** ptr_to_new_line, char* text)
 
     fclose(point_to_file);
 
+    return 0;
+}
+
+int assign_array_size(char** text)
+{
+
+    struct stat buf = {};
+
+    stat("ONEGIN_SHORT.txt", &buf);
+
+    int size_text = buf.st_size + 1;
+
+    *text = (char*)calloc(size_text, sizeof(char));
+
+    if (text == 0)
+    {
+        printf("ERROR: assign_array_size; text = 0\n");
+    }
     return 0;
 }
