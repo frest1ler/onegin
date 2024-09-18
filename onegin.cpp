@@ -9,14 +9,16 @@
 
 int main()
 {
-    char* ptr_to_new_line[MAXIMUM_NUMBER_OF_COLUMNS] = {};
+    Sorting_data value = {0, 0, 0, 0};
+
+    char* ptr_line[MAXIMUM_NUMBER_OF_COLUMNS] = {};
     char* text = 0;
 
-    read_from_file(ptr_to_new_line, text);
+    read_from_file(ptr_line, text);
 
-    sort(ptr_to_new_line);
+    sort(&value, ptr_line);
 
-    output_text(ptr_to_new_line);
+    output_text(ptr_line);
 
     return 0;
 }

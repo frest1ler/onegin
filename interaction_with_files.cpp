@@ -6,29 +6,30 @@
 #include "interaction_with_files.h"
 #include "onegin.h"
 
-int output_string(int y, char** ptr_to_new_line);
+int output_string(int y, char** ptr_line);
+int assign_array_size(char** text);
 
-int output_text(char** ptr_to_new_line)
+int output_text(char** ptr_line)
 {
-    assert(ptr_to_new_line);
+    assert(ptr_line);
 
     for(int y = 0; y < MAXIMUM_NUMBER_OF_COLUMNS-1; y++)
     {
-        output_string(y, ptr_to_new_line);
+        output_string(y, ptr_line);
     }
     return 0;
 }
 
-int output_string(int y, char** ptr_to_new_line)
+int output_string(int y, char** ptr_line)
 {
-    assert(ptr_to_new_line);
+    assert(ptr_line);
 
     int line_element = 0;
 
-    while((ptr_to_new_line[y])[line_element] != '\n' &&
-          (ptr_to_new_line[y])[line_element] != '\0')
+    while((ptr_line[y])[line_element] != '\n' &&
+          (ptr_line[y])[line_element] != '\0')
     {
-        putchar((ptr_to_new_line[y])[line_element]);
+        putchar((ptr_line[y])[line_element]);
         line_element++;
     }
     putchar('\n');
@@ -36,15 +37,15 @@ int output_string(int y, char** ptr_to_new_line)
     return 0;
 }
 
-int read_from_file(char** ptr_to_new_line, char* text)
+int read_from_file(char** ptr_line, char* text)
 {
-    assert(ptr_to_new_line);
+    assert(ptr_line);
 
     FILE * point_to_file = fopen("ONEGIN_SHORT.txt", "r");
 
     assign_array_size(&text);
 
-    ptr_to_new_line[0] = (char*)text;
+    ptr_line[0] = (char*)text;
 
     char symbol = 0;
     int  x      = 0;
@@ -58,7 +59,7 @@ int read_from_file(char** ptr_to_new_line, char* text)
         if (symbol == '\n')
 
         {
-            ptr_to_new_line[y] = (char*)(text+x);
+            ptr_line[y] = (char*)(text+x);
             y++  ;
         }
     }
