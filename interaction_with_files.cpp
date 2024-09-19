@@ -5,30 +5,32 @@
 #include <unistd.h>
 #include "interaction_with_files.h"
 
-int output_string(Interaction_files *value, char** ptr_line);
-int assign_array_size(char** text);
+int output_string(Interaction_files* value, Text_processing* data);
+int assign_array_size(Text_processing *data);
 
-int output_text(Interaction_files *value, char** ptr_line)
+int output_text(Interaction_files *value, Text_processing* data)
 {
-    assert(ptr_line);
+    assert(value);
+    assert(data);
 
-    for(value->number_line = 0; value->number_line < MAXIMUM_NUMBER_OF_COLUMNS-1; value->number_line++)
+    for(value->number_line = 0; value->number_line < data->max_number_line -1; value->number_line++)
     {
-        output_string(value, ptr_line);
+        output_string(value, data);
     }
     return 0;
 }
 
-int output_string(Interaction_files *value, char** ptr_line)
+int output_string(Interaction_files *value, Text_processing* data)
 {
-    assert(ptr_line);
+    assert(value);
+    assert(data);
 
     value->line_element = 0;
 
-    while((ptr_line[value->number_line])[value->line_element] != '\n' &&
-          (ptr_line[value->number_line])[value->line_element] != '\0')
+    while((data->ptr_line[value->number_line])[value->line_element] != '\n' &&
+          (data->ptr_line[value->number_line])[value->line_element] != '\0')
     {
-        putchar((ptr_line[value->number_line])[value->line_element]);
+        putchar((data->ptr_line[value->number_line])[value->line_element]);
         value->line_element++;
     }
     putchar('\n');
@@ -36,15 +38,15 @@ int output_string(Interaction_files *value, char** ptr_line)
     return 0;
 }
 
-int read_from_file(Interaction_files *value, char** ptr_line, char* text)
+int read_from_file(Text_processing* data, Interaction_files *value)
 {
-    assert(ptr_line);
+    assert(value);
+    assert(data);
 
     FILE * point_to_file = fopen("ONEGIN_SHORT.txt", "r");
 
-    assign_array_size(&text);
-
-    ptr_line[0] = (char*)text;
+    assign_array_size(data);
+    //ptr_line[0] = (char*)text;
 
     value->symbol       = 0;
     value->line_element = 0;
@@ -52,35 +54,56 @@ int read_from_file(Interaction_files *value, char** ptr_line, char* text)
 
     while((value->symbol = getc(point_to_file)) != EOF)
     {
-        text[value->line_element] = value->symbol;
+        data->text[value->line_element] = value->symbol;
         value->line_element++;
 
         if (value->symbol == '\n')
 
         {
-            ptr_line[value->number_line] = (char*)(text+value->line_element);
-            value->number_line++  ;
+            data->max_number_line++;
         }
     }
-    text[value->line_element + 1] = '\0';
+    data->text[value->line_element + 1] = '\0';
 
     fclose(point_to_file);
 
+    data->ptr_line = (char**)calloc(data->max_number_line, sizeof(char*));
+
+    value->symbol       = 0;
+    value->line_element = 0;
+    value->number_line  = 1;
+
+    data->ptr_line[0] = data->text;
+
+    while((value->symbol = data->text[value->line_element]) != EOF)
+    {
+        data->text[value->line_element] = value->symbol;
+        value->line_element++;
+
+        if (value->symbol == '\n')
+        {
+            data->ptr_line[value->number_line] = (char*)(data->text + value->line_element);
+
+            value->line_element++;
+            value->number_line++;
+
+        }
+    }
     return 0;
 }
 
-int assign_array_size(char** text)
+int assign_array_size(Text_processing *data)
 {
 
     struct stat buf = {};
 
     stat("ONEGIN_SHORT.txt", &buf);
 
-    int size_text = buf.st_size + 1;
+    data->size_text = buf.st_size + 1;
 
-    *text = (char*)calloc(size_text, sizeof(char));
+    data->text = (char*)calloc(data->size_text, sizeof(char));
 
-    if (text == 0)
+    if (data->text == 0)
     {
         printf("ERROR: assign_array_size; text = 0\n");
     }

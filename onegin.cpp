@@ -11,14 +11,13 @@ int main() //TODO аргументы командной строки (имя в�
 {
     Interaction_files value = {};
 
-    char* ptr_line[MAXIMUM_NUMBER_OF_COLUMNS] = {}; //TODO calloc
-    char* text = 0;
+    Text_processing data    = {};
 
-    read_from_file(&value, ptr_line, text);
+    read_from_file(&data, &value);
 
-    sort(&value, ptr_line);
+    sort(&value, &data);
 
-    output_text(&value, ptr_line);
+    output_text(&value, &data);
 
     return 0;
 }

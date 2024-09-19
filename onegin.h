@@ -10,9 +10,13 @@ struct Interaction_files
     int  skip_char_second_line;
 };
 
-//struct data_for_text
-//{
-//}
+struct Text_processing 
+{
+    int    max_number_line;
+    int    size_text;
+    char*  text;
+    char** ptr_line;
+};
 
 const int MAXIMUM_NUMBER_OF_COLUMNS = 15;
 

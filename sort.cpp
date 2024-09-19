@@ -5,21 +5,22 @@
 #include "onegin.h"
 #include "sort.h"
 
-int replace_values(Interaction_files *value, char** ptr_line);
-int sort_strings  (Interaction_files *value, char** ptr_line);
+int replace_values(Interaction_files *value, Text_processing* data);
+int sort_strings  (Interaction_files *value, Text_processing* data);
 int check_characters(char a);
 
-int sort(Interaction_files *value, char** ptr_line)
+int sort(Interaction_files* value, Text_processing* data)
 {
-    assert(ptr_line);
+    assert(value);
+    assert(data);
 
-    for(int i = 1; i < MAXIMUM_NUMBER_OF_COLUMNS; i++)
+    for(int i = 1; i < data->max_number_line; i++)
     {
         //printf("i = %d\n", i);
-        for(value->number_line = 1; value->number_line < MAXIMUM_NUMBER_OF_COLUMNS; value->number_line++)
+        for(value->number_line = 1; value->number_line < data->max_number_line; value->number_line++)
         {
-            sort_strings(value, ptr_line);
-            //printf("value->y = %d\n", value->y);
+            sort_strings(value, data);
+            //printf("value->number_line = %d\n", value->number_line);
             //printf("value->line_element = %d\n", value->line_element);
             //printf("value->skip_char_first_line = %d\n", value->skip_char_first_line);
             //printf("value->skip_char_second_line = %d\n", value->skip_char_second_line);
@@ -29,41 +30,41 @@ int sort(Interaction_files *value, char** ptr_line)
     return 0;
 }
 
-int replace_values(Interaction_files *value, char** ptr_line)
+int replace_values(Interaction_files* value, Text_processing* data)
 {
-    assert(&ptr_line);
     assert(value);
+    assert(data);
 
-    char* copy_the_address = ptr_line[value->number_line - 1];
+    char* copy_the_address = data->ptr_line[value->number_line - 1];
 
-    ptr_line[value->number_line - 1] = ptr_line[value->number_line];
-    ptr_line[value->number_line] = copy_the_address;
+    data->ptr_line[value->number_line - 1] = data->ptr_line[value->number_line];
+    data->ptr_line[value->number_line] = copy_the_address;
 
     return 0;
 }
-int sort_strings(Interaction_files *value, char** ptr_line)
+int sort_strings(Interaction_files* value, Text_processing* data)
 {
-    assert(ptr_line);
     assert(value);
+    assert(data);
 
     for(value->line_element = 0;
-        (ptr_line[value->number_line - 1])[value->line_element + value->skip_char_first_line] != '\n' &&
-        (ptr_line[value->number_line])[value->line_element + value->skip_char_second_line] != '\n';
+        (data->ptr_line[value->number_line - 1])[value->line_element + value->skip_char_first_line] != '\n' &&
+        (data->ptr_line[value->number_line])[value->line_element + value->skip_char_second_line] != '\n';
         value->line_element++)
     {
-        while(check_characters((ptr_line[value->number_line-1])[value->line_element + value->skip_char_first_line]))
+        while(check_characters((data->ptr_line[value->number_line-1])[value->line_element + value->skip_char_first_line]))
         {
             value->skip_char_first_line++;
         }
         //printf("value->skip_char_first_line = %d\n", value->skip_char_first_line);
 
-        while(check_characters((ptr_line[value->number_line])[value->line_element + value->skip_char_second_line]))
+        while(check_characters((data->ptr_line[value->number_line])[value->line_element + value->skip_char_second_line]))
         {
             value->skip_char_second_line++;
         }
         //printf("value->skip_char_second_line = %d\n", value->skip_char_second_line);
 
-        int solution_option = compare_caps_char(value, ptr_line);
+        int solution_option = compare_caps_char(value, data);
 
         switch(solution_option)
         {
@@ -73,7 +74,7 @@ int sort_strings(Interaction_files *value, char** ptr_line)
                 value->skip_char_first_line = 0;
                 value->skip_char_second_line = 0;
 
-                replace_values(value, ptr_line);
+                replace_values(value, data);
                 return 0;
             }
             case -1 :
