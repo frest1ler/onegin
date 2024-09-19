@@ -7,18 +7,18 @@
 #include "sort.h"
 #include "interaction_with_files.h"
 
-int main()
+int main() //TODO аргументы командной строки (имя входного файла и выходного)
 {
-    Sorting_data value = {0, 0, 0, 0};
+    Interaction_files value = {};
 
-    char* ptr_line[MAXIMUM_NUMBER_OF_COLUMNS] = {};
+    char* ptr_line[MAXIMUM_NUMBER_OF_COLUMNS] = {}; //TODO calloc
     char* text = 0;
 
-    read_from_file(ptr_line, text);
+    read_from_file(&value, ptr_line, text);
 
     sort(&value, ptr_line);
 
-    output_text(ptr_line);
+    output_text(&value, ptr_line);
 
     return 0;
 }

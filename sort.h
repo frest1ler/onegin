@@ -3,6 +3,6 @@
 
 #include "onegin.h"
 
-int sort(Sorting_data *value, char** ptr_line);
+int sort(Interaction_files *value, char** ptr_line);
 
 #endif /*SORT_H*/
