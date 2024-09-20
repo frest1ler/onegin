@@ -6,6 +6,7 @@
 #include "interaction_with_files.h"
 
 int output_string(Interaction_files* value, Text_processing* data);
+int check_empty_lines(Interaction_files *value, Text_processing* data, FILE * point_to_file);
 int assign_array_size(Text_processing *data);
 
 int output_text(Interaction_files *value, Text_processing* data)
@@ -54,14 +55,15 @@ int read_from_file(Text_processing* data, Interaction_files *value)
 
     while((value->symbol = getc(point_to_file)) != EOF)
     {
-        data->text[value->line_element] = value->symbol;
-        value->line_element++;
-
         if (value->symbol == '\n')
-
         {
+            check_empty_lines(value, data, point_to_file);
+
             data->max_number_line++;
         }
+        data->text[value->line_element] = value->symbol;
+
+        value->line_element++;
     }
     data->text[value->line_element + 1] = '\0';
 
@@ -107,5 +109,19 @@ int assign_array_size(Text_processing *data)
     {
         printf("ERROR: assign_array_size; text = 0\n");
     }
+    return 0;
+}
+
+int check_empty_lines(Interaction_files *value, Text_processing* data, FILE * point_to_file)
+{
+    assert(value);
+    assert(data);
+
+    data->text[value->line_element] = '\n';
+
+    while((value->symbol = getc(point_to_file)) == '\n');
+
+    value->line_element++;
+
     return 0;
 }
