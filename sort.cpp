@@ -5,84 +5,80 @@
 #include "onegin.h"
 #include "sort.h"
 
-int replace_values(Interaction_files *value, Text_processing* data);
-int sort_strings  (Interaction_files *value, Text_processing* data);
+int replace_values(int j, Text_processing* data);
+int sort_strings  (int j, Text_processing* data);
 int check_characters(char a);
 
-int sort(Interaction_files* value, Text_processing* data)
+int bubble_sort(Text_processing* data)
 {
-    assert(value);
     assert(data);
+    assert(data->ptr_line);
+    assert(data->text);
 
     for(int i = 1; i < data->max_number_line; i++)
     {
         //printf("i = %d\n", i);
-        for(value->number_line = 1; value->number_line < data->max_number_line; value->number_line++)
+        for(int j = 1; j < data->max_number_line; j++) //TODO улучь buble-sort
         {
-            sort_strings(value, data);
+            sort_strings(j, data);
             //printf("value->number_line = %d\n", value->number_line);
             //printf("value->line_element = %d\n", value->line_element);
-            //printf("value->skip_char_first_line = %d\n", value->skip_char_first_line);
-            //printf("value->skip_char_second_line = %d\n", value->skip_char_second_line);
+            //printf("value->value_skipped_characters_1line = %d\n", value->value_skipped_characters_1line);
+            //printf("value->value_skipped_characters_2line = %d\n", value->value_skipped_characters_2line);
             //printf("\n");
         }
     }
     return 0;
 }
 
-int replace_values(Interaction_files* value, Text_processing* data)
+int replace_values(int j, Text_processing* data)
 {
-    assert(value);
     assert(data);
 
-    char* copy_the_address = data->ptr_line[value->number_line - 1];
+    char* copy_the_address = data->ptr_line[j - 1];
 
-    data->ptr_line[value->number_line - 1] = data->ptr_line[value->number_line];
-    data->ptr_line[value->number_line] = copy_the_address;
+    data->ptr_line[j - 1] = data->ptr_line[j];
+    data->ptr_line[j] = copy_the_address;
 
     return 0;
 }
-int sort_strings(Interaction_files* value, Text_processing* data)
+int sort_strings(int j, Text_processing* data)
 {
-    assert(value);
     assert(data);
 
-    for(value->line_element = 0;
-        (data->ptr_line[value->number_line - 1])[value->line_element + value->skip_char_first_line] != '\n' &&
-        (data->ptr_line[value->number_line])[value->line_element + value->skip_char_second_line] != '\n';
-        value->line_element++)
+    char value_skipped_characters_1line  = 0;
+    char value_skipped_characters_2line = 0;
+
+    for(int line_element = 0;
+        (data->ptr_line[j - 1])[line_element + value_skipped_characters_1line] != '\n' &&
+        (data->ptr_line[j])[line_element + value_skipped_characters_2line]    != '\n';
+        line_element++)
     {
-        while(check_characters((data->ptr_line[value->number_line-1])[value->line_element + value->skip_char_first_line]))
+        while(check_characters((data->ptr_line[j-1])[line_element + value_skipped_characters_1line]))
         {
-            value->skip_char_first_line++;
+            value_skipped_characters_1line++;
         }
-        //printf("value->skip_char_first_line = %d\n", value->skip_char_first_line);
+        //printf("value->value_skipped_characters_1line = %d\n", value->value_skipped_characters_1line);
 
-        while(check_characters((data->ptr_line[value->number_line])[value->line_element + value->skip_char_second_line]))
+        while(check_characters((data->ptr_line[j])[line_element + value_skipped_characters_2line]))
         {
-            value->skip_char_second_line++;
+            value_skipped_characters_2line++;
         }
-        //printf("value->skip_char_second_line = %d\n", value->skip_char_second_line);
+        //printf("value->value_skipped_characters_2line = %d\n", value->value_skipped_characters_2line);
 
-        int solution_option = compare_caps_char(value, data);
+        int solution_option = compare_caps_char((data->ptr_line[j - 1])[line_element + value_skipped_characters_1line]
+                                                , (data->ptr_line[j])[line_element + value_skipped_characters_2line]);
+                                                 //TODO compare string(char* str_1, char* str_2)
 
         switch(solution_option)
         {
             case 1 :
             {
-                value->line_element = 0;
-                value->skip_char_first_line = 0;
-                value->skip_char_second_line = 0;
-
-                replace_values(value, data);
+                replace_values(j, data);
                 return 0;
             }
             case -1 :
             {
-                value->line_element = 0;
-                value->skip_char_first_line = 0;
-                value->skip_char_second_line = 0;
-
                 return 0;
              }
             case 0 :
@@ -91,10 +87,6 @@ int sort_strings(Interaction_files* value, Text_processing* data)
             }
             default:
             {
-                value->line_element = 0;
-                value->skip_char_first_line = 0;
-                value->skip_char_second_line = 0;
-
                 printf("ERROR\n");
                 break;
             }
@@ -103,7 +95,7 @@ int sort_strings(Interaction_files* value, Text_processing* data)
     return 0;
 }
 
-int check_characters(char a)
+int check_characters(char a)    //TODO rename use lib-func
 {
     return (isspace(a) || ispunct(a));
 }

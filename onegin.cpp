@@ -1,23 +1,26 @@
 #include <stdio.h>
-#include <assert.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 #include "onegin.h"
 #include "sort.h"
-#include "interaction_with_files.h"
+#include "reading_from_file.h"
+#include "output_text.h"
 
 int main() //TODO аргументы командной строки (имя входного файла и выходного)
 {
-    Interaction_files value = {};
+    Text_processing data = {}; //TODO rename
 
-    Text_processing data    = {};
+    //printf("Text_processing data = {};\n");
 
-    read_from_file(&data, &value);
+    read_from_file(&data);
 
-    sort(&value, &data);
+    //printf("read_from_file(&data);\n");
 
-    output_text(&value, &data);
+    bubble_sort(&data);
+
+    //printf("bubble_sort(&data);\n");
+
+    output_text(&data);
+
+    //printf("output_text(&data);\n");
 
     return 0;
 }

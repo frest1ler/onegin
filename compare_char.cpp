@@ -2,7 +2,7 @@
 #include <assert.h>
 #include "compare_char.h"
 
-int compare_char(char a, char b)
+int compare_char(char a, char b) //TODO func compare string
 {
     if ((a - b) > 0)
     {
@@ -15,13 +15,10 @@ int compare_char(char a, char b)
     return 0;
 }
 
-int compare_caps_char(Interaction_files* value, Text_processing* data)
+int compare_caps_char(char a, char b)
 {
-    assert(value);
-    assert(data);
-
-    char first  = toupper((data->ptr_line[value->number_line - 1])[value->line_element + value->skip_char_first_line]);
-    char second = toupper((data->ptr_line[value->number_line])[value->line_element + value->skip_char_second_line]);
+    char first  = toupper(a);
+    char second = toupper(b);
 
     return compare_char(first, second);
 }

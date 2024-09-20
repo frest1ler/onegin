@@ -4,6 +4,6 @@
 #include "onegin.h"
 
 int compare_char(char a, char b);
-int compare_caps_char(Interaction_files* value, Text_processing* data);
+int compare_caps_char(char a, char b);
 
 #endif /*COMPARE_CHAR_H*/
