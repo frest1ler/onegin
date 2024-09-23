@@ -1,5 +1,4 @@
 #include <ctype.h>
-#include <assert.h>
 #include "compare_char.h"
 
 int compare_char(char a, char b) //TODO func compare string

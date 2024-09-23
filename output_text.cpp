@@ -4,7 +4,7 @@
 
 int output_string(int number_line, Text_processing* data);
 
-int output_text(Text_processing* data) //TODO file output
+int output_text(Text_processing* data)
 {
     assert(data);
 
