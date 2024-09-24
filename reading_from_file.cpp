@@ -6,8 +6,9 @@
 #include "reading_from_file.h"
 
 int  output_string(int number_line, Text_processing* data);
-int  check_empty_lines(int* line_element, char* symbol, Text_processing* data, FILE * point_to_file);
+int  check_empty_lines(int* line_element, Text_processing* data);
 int  search_new_line(Text_processing* data);
+int  count_number_lines(Text_processing* data);
 void assign_array_size(Text_processing *data);
 
 int read_from_file(Text_processing* data) //TODO rename
@@ -18,12 +19,10 @@ int read_from_file(Text_processing* data) //TODO rename
 
     assign_array_size(data);
 
-    char symbol       = 0;
-    int  line_element = 0;
-    int  number_line  = 1;
-
     if (!fread(data->text, 1, data->size_text, point_to_file))
     {
+        fclose(point_to_file);
+
         printf("ERROR: fread didn't read the characters\n");
 
         printf("data->size_text = %d\n", data->size_text);
@@ -32,17 +31,10 @@ int read_from_file(Text_processing* data) //TODO rename
     }
 
     fclose(point_to_file);
+    printf("max_number_line = %d\n", data->max_number_line);
+    count_number_lines(data);
 
-    for(line_element = 0; (symbol = data->text[line_element]) != EOF; line_element++)
-    {
-        if (symbol == '\n')
-        {
-            data->max_number_line++;
-            data->text[line_element] = '\0';
-        }
-    }
-
-    data->ptr_line = (char**)calloc(data->max_number_line, sizeof(char*));
+    printf("max_number_line = %d\n", data->max_number_line);
 
     search_new_line(data);
 
@@ -67,19 +59,15 @@ void assign_array_size(Text_processing *data) //TODO rename
     }
 }
 
-int check_empty_lines(int* line_element, char* symbol, Text_processing* data, FILE * point_to_file)
+int check_empty_lines(int* line_element, Text_processing* data)
 {
     assert(data);
-    assert(point_to_file);
     assert(line_element);
-    assert(symbol);
 
-    data->text[*line_element] = '\n';
-
-    while((*symbol = getc(point_to_file)) == '\n');
-
-    *line_element++;
-
+    while(data->text[*line_element + 1] == '\n')
+    {
+        *line_element++;
+    }
     return 0;
 }
 
@@ -107,3 +95,26 @@ int search_new_line(Text_processing* data)
     return 0;
 }
 
+int count_number_lines(Text_processing* data)
+{
+    assert(data);
+
+    char symbol = 0;
+
+    data->max_number_line = 1;
+
+    for(int line_element = 0; (symbol = data->text[line_element]) != EOF; line_element++)
+    {
+        if (symbol == '\n')
+        {
+            //check_empty_lines(&line_element, data);
+            data->max_number_line++;
+            data->text[line_element] = '\0';
+            //printf("Hi\n");
+        }
+    }
+
+    data->ptr_line = (char**)calloc(data->max_number_line, sizeof(char*));
+
+    return 0;
+}

@@ -15,19 +15,13 @@ int bubble_sort(Text_processing* data)
     assert(data->ptr_line);
     assert(data->text);
 
-    for(int i = 1; i < data->max_number_line; i++)
-    {
-        //printf("i = %d\n", i);
-        for(int j = 1; j < data->max_number_line; j++) //TODO улучь buble-sort
+        int i = 1;
+
+        for(int j = 1, i = 1; j < data->max_number_line &&
+            i < data->max_number_line * data->max_number_line; j++, i++)
         {
             sort_strings(j, data);
-            //printf("value->number_line = %d\n", value->number_line);
-            //printf("value->line_element = %d\n", value->line_element);
-            //printf("value->value_skipped_characters_1line = %d\n", value->value_skipped_characters_1line);
-            //printf("value->value_skipped_characters_2line = %d\n", value->value_skipped_characters_2line);
-            //printf("\n");
         }
-    }
     return 0;
 }
 
