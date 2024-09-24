@@ -101,8 +101,6 @@ int count_number_lines(Text_processing* data)
 
     char symbol = 0;
 
-    data->max_number_line = 1;
-
     for(int line_element = 0; (symbol = data->text[line_element]) != EOF; line_element++)
     {
         if (symbol == '\n')

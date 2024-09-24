@@ -5,9 +5,8 @@
 #include "onegin.h"
 #include "sort.h"
 
-int replace_values(int j, Text_processing* data);
 int sort_strings  (int j, Text_processing* data);
-int check_characters(char a);
+int replace_values(int j, Text_processing* data);
 
 int bubble_sort(Text_processing* data)
 {
@@ -15,12 +14,12 @@ int bubble_sort(Text_processing* data)
     assert(data->ptr_line);
     assert(data->text);
 
-        int i = 1;
-
-        for(int j = 1, i = 1; j < data->max_number_line &&
-            i < data->max_number_line * data->max_number_line; j++, i++)
+        for(int i = 1; i < data->max_number_line; i++)
         {
-            sort_strings(j, data);
+            for(int j = 1; j < data->max_number_line; j++)
+            {
+                sort_strings(j, data);
+            }
         }
     return 0;
 }
@@ -40,28 +39,26 @@ int sort_strings(int j, Text_processing* data)
 {
     assert(data);
 
-    char value_skipped_characters_1line  = 0;
-    char value_skipped_characters_2line = 0;
+    char value_skip_char_1line  = 0;
+    char value_skip_char_2line  = 0;
 
     for(int line_element = 0;
-        (data->ptr_line[j - 1])[line_element + value_skipped_characters_1line] != '\n' &&
-        (data->ptr_line[j])[line_element + value_skipped_characters_2line]    != '\n';
+        (data->ptr_line[j - 1])[line_element + value_skip_char_1line] != '\n' &&
+        (data->ptr_line[j])[line_element + value_skip_char_2line]    != '\n';
         line_element++)
     {
-        while(check_characters((data->ptr_line[j-1])[line_element + value_skipped_characters_1line]))
+        while(check_characters((data->ptr_line[j-1])[line_element + value_skip_char_1line]))
         {
-            value_skipped_characters_1line++;
+            value_skip_char_1line++;
         }
-        //printf("value->value_skipped_characters_1line = %d\n", value->value_skipped_characters_1line);
 
-        while(check_characters((data->ptr_line[j])[line_element + value_skipped_characters_2line]))
+        while(check_characters((data->ptr_line[j])[line_element + value_skip_char_2line]))
         {
-            value_skipped_characters_2line++;
+            value_skip_char_2line++;
         }
-        //printf("value->value_skipped_characters_2line = %d\n", value->value_skipped_characters_2line);
 
-        int solution_option = compare_caps_char((data->ptr_line[j - 1])[line_element + value_skipped_characters_1line]
-                                                , (data->ptr_line[j])[line_element + value_skipped_characters_2line]);
+        int solution_option = compare_caps_char((data->ptr_line[j - 1])[line_element + value_skip_char_1line]
+                                                , (data->ptr_line[j])[line_element + value_skip_char_2line]);
                                                  //TODO compare string(char* str_1, char* str_2)
 
         switch(solution_option)
@@ -87,9 +84,4 @@ int sort_strings(int j, Text_processing* data)
         }
     }
     return 0;
-}
-
-int check_characters(char a)    //TODO rename use lib-func
-{
-    return (isspace(a) || ispunct(a));
 }
