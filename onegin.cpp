@@ -4,7 +4,7 @@
 #include "reading_from_file.h"
 #include "output_text.h"
 
-int main() //TODO аргументы командной строки (имя входного файла и выходного)
+int main()
 {
     Text_processing data = {}; //TODO rename
 

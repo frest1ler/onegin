@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <assert.h>
-#include "compare_char.h"
+#include "comparators.h"
 #include "onegin.h"
 #include "sort.h"
 
@@ -39,30 +39,10 @@ int sort_strings(int j, Text_processing* data)
 {
     assert(data);
 
-    char value_skip_char_1line  = 0;
-    char value_skip_char_2line  = 0;
+    int solution_option = compare_string(j, data->ptr_line);
 
-    for(int line_element = 0;
-        (data->ptr_line[j - 1])[line_element + value_skip_char_1line] != '\n' &&
-        (data->ptr_line[j])[line_element + value_skip_char_2line]    != '\n';
-        line_element++)
+    switch(solution_option)
     {
-        while(check_characters((data->ptr_line[j-1])[line_element + value_skip_char_1line]))
-        {
-            value_skip_char_1line++;
-        }
-
-        while(check_characters((data->ptr_line[j])[line_element + value_skip_char_2line]))
-        {
-            value_skip_char_2line++;
-        }
-
-        int solution_option = compare_caps_char((data->ptr_line[j - 1])[line_element + value_skip_char_1line]
-                                                , (data->ptr_line[j])[line_element + value_skip_char_2line]);
-                                                 //TODO compare string(char* str_1, char* str_2)
-
-        switch(solution_option)
-        {
             case 1 :
             {
                 replace_values(j, data);
@@ -71,17 +51,12 @@ int sort_strings(int j, Text_processing* data)
             case -1 :
             {
                 return 0;
-             }
-            case 0 :
-            {
-                break;
             }
             default:
             {
                 printf("ERROR\n");
                 break;
             }
-        }
     }
     return 0;
 }

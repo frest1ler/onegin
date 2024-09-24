@@ -31,10 +31,10 @@ int read_from_file(Text_processing* data) //TODO rename
     }
 
     fclose(point_to_file);
-    printf("max_number_line = %d\n", data->max_number_line);
+    //printf("max_number_line = %d\n", data->max_number_line);
     count_number_lines(data);
 
-    printf("max_number_line = %d\n", data->max_number_line);
+    //printf("max_number_line = %d\n", data->max_number_line);
 
     search_new_line(data);
 
