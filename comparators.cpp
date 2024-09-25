@@ -57,3 +57,8 @@ int compare_string(char* line1, char* line2)
     }
     return 0;
 }
+
+// int reverse_compare_string(char* line1, char* line2)
+// {
+//
+// }

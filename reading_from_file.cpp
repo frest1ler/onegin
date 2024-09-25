@@ -12,7 +12,7 @@ void read_from_file_text(Info_about_text* info)
 {
     assert(info);
 
-    char fname[] = "ONEGIN_SHORT.txt";
+    char fname[] = "ONEGIN_2.txt";
 
     FILE * point_to_file = fopen(fname, "rb");
 
@@ -20,10 +20,14 @@ void read_from_file_text(Info_about_text* info)
 
     calculate_array_size(info, fname);
 
-    if (!fread(info->text, 1, info->size_text, point_to_file))
+    int number_successfully_read_chars = fread(info->text, 1, info->size_text, point_to_file);
+
+    if (number_successfully_read_chars != info->size_text)
     {
-        printf("ERROR: fread didn't read the characters\n",
-               "info->size_text = %d\n", info->size_text);
+        printf("ERROR: fread didn't read enough chars\n",
+               "info->size_text = %d\n",
+               "number_successfully_read_chars = %d\n",
+               info->size_text, number_successfully_read_chars);
     }
     fclose(point_to_file);
 

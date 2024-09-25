@@ -48,7 +48,7 @@ static void count_number_lines(Info_about_text* info)
 
     char symbol = 0;
 
-    for(int line_element = 0; (symbol = info->text[line_element]) != EOF; line_element++)
+    for(int line_element = 0; (symbol = info->text[line_element]) && line_element < info->size_text; line_element++)
     {
         if (symbol == '\n')
         {
@@ -57,6 +57,5 @@ static void count_number_lines(Info_about_text* info)
             info->text[line_element] = '\0';
         }
     }
-
     info->ptr_line = (char**)calloc(info->max_number_line, sizeof(char*));
 }
