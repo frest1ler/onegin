@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "initialize_pointer_array.h"
 #include "onegin.h"
 #include "sort.h"
 #include "reading_from_file.h"
@@ -6,21 +6,15 @@
 
 int main()
 {
-    Text_processing data = {}; //TODO rename
+    Info_about_text info = {};
 
-    //printf("Text_processing data = {};\n");
+    read_from_file_text(&info);
 
-    read_from_file(&data);
+    initialize_pointer_array(&info);
 
-    //printf("read_from_file(&data);\n");
+    bubble_sort(&info);
 
-    bubble_sort(&data);
-
-    //printf("bubble_sort(&data);\n");
-
-    output_text(&data);
-
-    //printf("output_text(&data);\n");
+    output_text(&info);
 
     return 0;
 }

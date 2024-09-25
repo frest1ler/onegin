@@ -3,6 +3,6 @@
 
 #include "onegin.h"
 
-int read_from_file(Text_processing* data); //TODO rename
+void read_from_file_text(Info_about_text* info); 
 
 #endif /*READING_FROM_FILE_H*/

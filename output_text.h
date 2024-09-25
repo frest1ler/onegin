@@ -3,6 +3,6 @@
 
 #include "onegin.h"
 
-int output_text(Text_processing* data);
+int output_text(Info_about_text* info);
 
 #endif /*OUTPUT_TEXT_H*/
