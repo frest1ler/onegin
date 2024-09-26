@@ -5,6 +5,7 @@
 
 static void search_new_line(Info_about_text* info);
 static void count_number_lines(Info_about_text* info);
+static void check_empty_lines(int* line_element, Info_about_text* info);
 
 void initialize_pointer_array(Info_about_text* info)
 {
@@ -27,10 +28,9 @@ static void search_new_line(Info_about_text* info)
 
     info->ptr_line = (char**)calloc(info->max_number_line, sizeof(char*));
 
-    int symbol       = 0;
-    // TODO а где size_t
-    int line_element = 0;
-    int number_line  = 1;
+    char symbol         = 0;
+    size_t line_element = 0;
+    size_t number_line  = 1;
 
     info->ptr_line[0] = info->text;
 
@@ -64,5 +64,17 @@ static void count_number_lines(Info_about_text* info)
             info->max_number_line++;
             info->text[line_element] = '\0';
         }
+    }
+}
+
+static void check_empty_lines(int* line_element, Info_about_text* info)
+{
+    assert(info);
+    assert(line_element);
+    assert(info->text);
+
+    while(info->text[*line_element + 1] == '\n')
+    {
+        *line_element++;
     }
 }

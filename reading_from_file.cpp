@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include "reading_from_file.h"
 
-void check_empty_lines(int* line_element, Info_about_text* info);
 void calculate_array_size(Info_about_text *info, char* fname);
 
 void read_from_file_text(Info_about_text* info)
@@ -67,17 +66,5 @@ void calculate_array_size(Info_about_text *info, char* fname)
         printf("ERROR: calculate_array_size; text = NULL\n");
 
         exit(EXIT_FAILURE);
-    }
-}
-
-void check_empty_lines(int* line_element, Info_about_text* info)
-{
-    assert(info);
-    assert(line_element);
-    assert(info->text);
-
-    while(info->text[*line_element + 1] == '\n')
-    {
-        *line_element++;
     }
 }
